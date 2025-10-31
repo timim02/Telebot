@@ -37,13 +37,16 @@ def coin_handler(message):
     coin = choice(["Хотел как лучше — получилось как всегда.", "Мозг!, не мешай мне спать!" , "Деньги были, a тепер нету. 💸", "Что делает утка на компьютере?— Крякает код. 🦆💻"])
     bot.reply_to(message, coin)
 
-
-# Вставь сюда токен своего бота
+@bot.message_handler(content_types=['new_chat_members'])
+def make_some(message):
+    bot.send_message(message.chat.id, 'I accepted a new user!')
+    bot.approve_chat_join_request(message.chat.id, message.from_user.id)
 
 # Handle all other messages with content_type 'text' (content_types defaults to ['text'])
 @bot.message_handler(func=lambda message: True)
 def echo_message(message):
     bot.reply_to(message, message.text)
+
 
 
 bot.infinity_polling()
